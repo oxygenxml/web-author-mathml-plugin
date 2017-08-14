@@ -7,7 +7,39 @@
 	<version>19.1-SNAPSHOT</version>
 
 	<build>
+    <finalName>${project.artifactId}-${project.nosnapshot.version}</finalName>
 		<plugins>
+  		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<!-- We only want the final JAR package in the target folder so that 
+					it's easier for users to identify it.-->
+					<outputDirectory>${project.build.directory}/build</outputDirectory>
+				</configuration>
+			</plugin>
+      			<!-- remove the -SNAPSHOT from packaged plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.10</version>
+				<executions>
+					<execution>
+						<id>set-version-no-snapshot</id>
+						<goals>
+							<goal>regex-property</goal>
+						</goals>
+						<configuration>
+							<name>project.nosnapshot.version</name>
+							<value>${project.version}</value>
+							<regex>-SNAPSHOT</regex>
+							<replacement></replacement>
+							<failIfNoMatch>false</failIfNoMatch>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.4</version>
