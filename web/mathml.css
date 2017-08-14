@@ -1,0 +1,8 @@
+@namespace mml "http://www.w3.org/1998/Math/MathML";
+@media oxygen and (platform:webapp) {
+  mml|math {
+    content: oxy_editor(
+      webappRendererClassName, "com.oxygenxml.sdksamples.mathml.WebappMathMLRenderer"
+      edit, "custom");
+  }
+}

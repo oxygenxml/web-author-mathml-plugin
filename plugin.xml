@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The plugin.dtd file is located in the OXYGEN_INSATALL_DIR/plugins directory -->
+<!DOCTYPE plugin SYSTEM "../plugin.dtd">
+
+<plugin
+    id="com.oxygenxml.plugin.MathMLConvertor"
+    name="MathML"
+    description="Provides support for embedded MathML equations (where allowed by the document schema)."
+    version="${project.nosnapshot.version}"
+    vendor="SyncRO"
+    class="com.oxygenxml.sdksamples.mathml.MathMLPlugin">
+    <runtime>
+      <librariesFolder name="lib"/>
+      <library name="target/classes"/>
+    </runtime>
+    <extension type="AuthorStylesheet" href="web/mathml.css"/>
+    <extension type="WebappServlet" class="com.oxygenxml.sdksamples.mathml.MathmlServlet"/>
+    <extension type="WebappStaticResourcesFolder" path="web/" href="mml-static"/>
+</plugin>
