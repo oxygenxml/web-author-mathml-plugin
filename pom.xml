@@ -4,7 +4,7 @@
   
   <groupId>com.oxygenxml</groupId>
   <artifactId>web-author-mathml-plugin</artifactId>
-  <version>19.1-SNAPSHOT</version>
+  <version>20.0-SNAPSHOT</version>
 
   <build>
     <finalName>${project.artifactId}-${project.nosnapshot.version}</finalName>
