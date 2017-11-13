@@ -13,6 +13,8 @@ import org.xml.sax.SAXException;
 
 import net.sourceforge.jeuclid.context.LayoutContextImpl;
 import net.sourceforge.jeuclid.converter.Converter;
+import ro.sync.ecss.extensions.api.AuthorAccess;
+import ro.sync.ecss.extensions.api.AuthorDocumentController;
 import ro.sync.ecss.extensions.api.AuthorDocumentType;
 import ro.sync.xml.parser.ParserCreator;
 
@@ -30,19 +32,17 @@ public class JEuclidRenderer {
   /**
    * Pattern used to detect the prefix for the MathML namespace.
    */
-  private Pattern prefixPattern;
+  private static final Pattern prefixPattern = Pattern.compile("<([a-z]+):math");
   
   /**
    * Pattern used to detect named entities.
    */
-  private Pattern namedEntityPattern;
+  private static final Pattern namedEntityPattern = Pattern.compile("&[^#]");
 
   /**
    * Constructor.
    */
   public JEuclidRenderer() {
-    prefixPattern = Pattern.compile("<([a-z]+):math");
-    namedEntityPattern = Pattern.compile("&[^#]");
   }
 
 	/**
@@ -125,24 +125,27 @@ public class JEuclidRenderer {
 	  return null;
 	}
 
-	/**
-	 * Converts an mathML fragment to image.
-	 * 
-	 * @param xml The mathML fragment as String
-	 * @param systemID The system identifier.
-	 * @param docType The document type definition.
-	 * 
-	 * @return The image
-	 * 
-	 * @throws IOException If it fails.
-	 * @throws SAXException If it fails.
-	 */
-	public BufferedImage convertToImage(String xml, String systemID, AuthorDocumentType docType) throws IOException, SAXException {
-		Converter converter = Converter.getInstance();
-		Document doc = this.loadXMLFromString(xml, systemID, docType);
-    return converter.render(
-							doc, 
-							new LayoutContextImpl(LayoutContextImpl.getDefaultLayoutContext())
-							);
-	}
+  /**
+   * Converts an mathML fragment to image.
+   * 
+   * @param equationDescriptor The equation descriptor. 
+   * 
+   * @return The image
+   * 
+   * @throws IOException If it fails.
+   * @throws SAXException If it fails.
+   */
+  public BufferedImage convertToImage(AuthorAccess authorAccess, String xml) throws IOException, SAXException {
+      AuthorDocumentController documentController = authorAccess.getDocumentController();
+      AuthorDocumentType docType = documentController.getDoctype();
+      String systemID = documentController.getAuthorDocumentNode().getSystemID();
+      
+      Converter converter = Converter.getInstance();
+      Document doc = this.loadXMLFromString(xml, systemID, docType);
+      return converter.render(
+                doc, 
+                new LayoutContextImpl(LayoutContextImpl.getDefaultLayoutContext())
+                );
+  }
+
 }

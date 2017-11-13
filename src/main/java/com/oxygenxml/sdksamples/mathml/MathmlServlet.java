@@ -1,22 +1,32 @@
 package com.oxygenxml.sdksamples.mathml;
 
-import java.io.File;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ro.sync.ecss.extensions.api.webapp.plugin.WebappServletPluginExtension;
+import org.apache.log4j.Logger;
+import org.xml.sax.SAXException;
 
-import com.google.common.io.Files;
 import com.google.common.net.MediaType;
+
+import ro.sync.ecss.extensions.api.access.EditingSessionContext;
+import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
+import ro.sync.ecss.extensions.api.webapp.plugin.WebappServletPluginExtension;
 
 /**
  * MathML SERVLET used to retrieve the PNG image, after conversion.
  */
 public class MathmlServlet extends WebappServletPluginExtension {
-
+  /**
+   * Logger
+   */
+  private static Logger logger = Logger
+      .getLogger(MathmlServlet.class.getName());
+  
   /**
    * Returns the PNG image that corresponds to the mathml equation.
    * 
@@ -25,17 +35,29 @@ public class MathmlServlet extends WebappServletPluginExtension {
    */
   @Override
   public void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws ServletException, IOException {
-	  // The hash of the current wanted image.
-	  String xmlHash = httpRequest.getParameter("xmlHash");
+	  // The params used to retrieve the image
+	  String docId = httpRequest.getParameter("docId");
+    String elemId = httpRequest.getParameter("elemId");
 	  
-	  // the image
-	  File outputfile = new File(WebappMathMLRenderer.cacheFolder, xmlHash);
+	  AuthorDocumentModel doc = EditingSessionContextManager.getDocument(docId);
+	  if (doc != null) {
+	    EditingSessionContext editingContext = doc.getAuthorAccess().getEditorAccess().getEditingContext();
+      PerDocumentEquationCache equationCache = (PerDocumentEquationCache) editingContext.getAttribute(EditingSessionContextManager.EQUATION_CACHE);
+      
+      String xml = equationCache.getXmlFragment(Long.valueOf(elemId));
+	    BufferedImage image;
+      try {
+        image = new JEuclidRenderer().convertToImage(doc.getAuthorAccess(), xml);
+      } catch (SAXException e) {
+        logger.error("Error parsing MathML content: " + e.getMessage(), e);
+        httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error parsing MathML content");
+        return;
+      }
 	  
-	  if (outputfile.exists()) {
 	    // mime type, cache, image content
-	    Files.copy(outputfile, httpResponse.getOutputStream());
 	    httpResponse.setHeader("Content-Type", MediaType.PNG.toString());
 	    httpResponse.setHeader("Cache-Control", "max-age=31536000");
+      ImageIO.write(image, "png", httpResponse.getOutputStream());
 	  } else {
 	    httpResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "MathML PNG file was not found.");
 	  }
