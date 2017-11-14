@@ -77,7 +77,7 @@ public class EditingSessionContextManager implements WorkspaceAccessPluginExtens
    * @return A secure unique random ID.
    */
   private String generateId() {
-    byte bytes[] = new byte[20];
+    byte[] bytes = new byte[20];
     random.nextBytes(bytes);
     return Hex.encodeHexString(bytes);
   }

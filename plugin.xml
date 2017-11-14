@@ -8,7 +8,7 @@
     description="Provides support for embedded MathML equations (where allowed by the document schema)."
     version="${project.nosnapshot.version}"
     vendor="SyncRO"
-    class="com.oxygenxml.sdksamples.mathml.MathMLPlugin">
+    class="ro.sync.exml.plugin.Plugin">
     <runtime>
       <librariesFolder name="lib"/>
       <library name="target/classes"/>

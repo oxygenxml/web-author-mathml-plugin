@@ -39,12 +39,6 @@ public class JEuclidRenderer {
    */
   private static final Pattern namedEntityPattern = Pattern.compile("&[^#]");
 
-  /**
-   * Constructor.
-   */
-  public JEuclidRenderer() {
-  }
-
 	/**
 	 * Converts from String to org.w3c.dom.Document.
 	 * 
