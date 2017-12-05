@@ -11,6 +11,10 @@
   <name>Web Author MathML Plugin</name>
   <description>Web Author plugin for rendering and editing MathML equations</description>
 
+  <properties> 
+    <sonar.sources>src/main/java,web</sonar.sources>
+  </properties>
+  
   <build>
     <finalName>${project.artifactId}-${project.nosnapshot.version}</finalName>
     <plugins>
