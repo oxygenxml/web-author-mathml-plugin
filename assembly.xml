@@ -22,6 +22,10 @@
 			<outputDirectory>/</outputDirectory>
 			<filtered>true</filtered>
 		</file>
+		<file>
+			<source>third-party-components.xml</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
 	</files>
 
 	<fileSets>
