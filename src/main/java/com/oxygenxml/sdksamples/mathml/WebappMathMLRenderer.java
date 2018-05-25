@@ -72,6 +72,14 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
       out.append("<span style=\"color: red\">Error rendering MathML</span>");
     }
   }
+  
+  /**
+   * The client-side rendering supported being wrapped in marker spans.
+   */
+  @Override
+  public boolean isChangeTrackingAware() {
+    return true;
+  };
 
   /**
    * Generates the HTML image which will display the rendered MathML.
