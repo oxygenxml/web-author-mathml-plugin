@@ -66,7 +66,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
       String escapedXML = PluginWorkspaceProvider.getPluginWorkspace().
                               getXMLUtilAccess().escapeAttributeValue(xmlPPed);
       
-      out.append(generateImgHtml(image, docId, elemId, xmlHash, escapedXML));
+      out.append(generateImgHtml(image, docId, elemId, xmlHash, escapedXML, context.isReadOnlyContext()));
     } catch (Exception e) {
       logger.error(e, e);
       out.append("<span style=\"color: red\">Error rendering MathML</span>");
@@ -79,7 +79,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
   @Override
   public boolean isChangeTrackingAware() {
     return true;
-  };
+  }
 
   /**
    * Generates the HTML image which will display the rendered MathML.
@@ -89,16 +89,18 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
    * @param elemId The ID of the XML element that represents the equation.
    * @param xmlHash The name of the image.
    * @param escapedXML The math-ml xml content.
+   * @param readOnly <code>true</code> if the equation is rendered in a read-only part of the document.
    * @return The HTML of the image which will be rendered in Web Author.
    */
-  String generateImgHtml(BufferedImage image, String docId, long elemId, String xmlHash, String escapedXML) {
+  String generateImgHtml(BufferedImage image, String docId, long elemId, String xmlHash, String escapedXML, boolean readOnly) {
     // Setting image width and height to reduce the impact on the page layout of math-ml.
     return "<img width=\"" + image.getWidth() + "\" height=\"" + image.getHeight() + 
         "\" class=\"mathml-image\" src=\"../plugins-dispatcher/mathml?"
         + "xmlHash=" + xmlHash + ".png&"
         + "elemId=" + elemId + "&"
-        + "docId=" + docId
-        + "\" data-alt=\"" + escapedXML + "\"></img>";
+        + "docId=" + docId + "\""
+        + (readOnly ? " data-ro=\"true\"" : "")
+        + " data-alt=\"" + escapedXML + "\"></img>";
   }
   
   /**

@@ -14,7 +14,7 @@ public class WebappMathMlRendererTest {
   @Test
   public void testMathMlImgsHaveWidthAndHeight() {
     BufferedImage image = new BufferedImage(500, 600, BufferedImage.TYPE_BYTE_BINARY);
-    String generatedImgHtml = new WebappMathMLRenderer().generateImgHtml(image, "", 1L, "hash", "<xml_content/>");
+    String generatedImgHtml = new WebappMathMLRenderer().generateImgHtml(image, "", 1L, "hash", "<xml_content/>", false);
     
     assertTrue(generatedImgHtml.indexOf("width=\"500\"") != -1);
     assertTrue(generatedImgHtml.indexOf("height=\"600\"") != -1);

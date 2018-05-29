@@ -17,9 +17,12 @@
    * @param {sync.ctrl.Controller} controller The document controller.
    */
   MathMLEnhancer.prototype.enterDocument = function(controller) {
-    goog.events.listen(this.formControl,
+    var img = this.formControl.childNodes[0];
+    if ('true' !== goog.dom.dataset.get(img, 'ro')) {
+      goog.events.listen(this.formControl,
         goog.events.EventType.CLICK,
         goog.bind(this.beginEditing, this));
+    }
     var translationSet = {
           MATHML_EDITOR_: {
             "en_US": "MathML Editor",
