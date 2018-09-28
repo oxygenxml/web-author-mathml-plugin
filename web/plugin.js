@@ -91,7 +91,7 @@
     if (!MathMLEnhancer.dialog_) {
       var dialog = workspace.createDialog();
       dialog.getElement().innerHTML =
-        '<textarea class="mml-edit-area"></textarea>';
+        '<textarea class="mml-edit-area" spellcheck="false"></textarea>';
       dialog.setTitle(tr(msgs.MATHML_EDITOR_));
       dialog.setResizable(true);
       dialog.setPreferredSize(500, 500);
