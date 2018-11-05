@@ -104,11 +104,11 @@
   /**
    * @override
    */
-  MathMLEnhancer.prototype.updateDisabledState = function() {
+  MathMLEnhancer.prototype.disabledStateUpdated = function(isDisabled) {
     var dialog = MathMLEnhancer.dialog_;
     if (dialog) {
       var textarea = dialog.getElement().childNodes[0];
-      if (this.isDisabled()) {
+      if (isDisabled) {
         textarea.setAttribute('disabled', 'true');
         dialog.setButtonConfiguration(sync.api.Dialog.ButtonConfiguration.CANCEL);
       } else {
