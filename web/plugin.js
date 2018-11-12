@@ -96,7 +96,6 @@
       dialog.setResizable(true);
       dialog.setPreferredSize(500, 500);
       MathMLEnhancer.dialog_ = dialog;
-      this.updateDisabledState();
     }
     return MathMLEnhancer.dialog_;
   };
