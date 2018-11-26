@@ -17,12 +17,10 @@
    * @param {sync.ctrl.Controller} controller The document controller.
    */
   MathMLEnhancer.prototype.enterDocument = function(controller) {
-    var img = this.formControl.childNodes[0];
-    if ('true' !== goog.dom.dataset.get(img, 'ro')) {
-      goog.events.listen(this.formControl,
-        goog.events.EventType.CLICK,
-        goog.bind(this.beginEditing, this));
-    }
+    goog.events.listen(this.formControl,
+      goog.events.EventType.CLICK,
+      goog.bind(this.beginEditing, this));
+
     var translationSet = {
           MATHML_EDITOR_: {
             "en_US": "MathML Editor",
@@ -96,6 +94,9 @@
       dialog.setResizable(true);
       dialog.setPreferredSize(500, 500);
       MathMLEnhancer.dialog_ = dialog;
+
+      // Update the disabled state.
+      this.disabledStateUpdated(this.isDisabled());
     }
     return MathMLEnhancer.dialog_;
   };
@@ -104,6 +105,11 @@
    * @override
    */
   MathMLEnhancer.prototype.disabledStateUpdated = function(isDisabled) {
+    var img = this.formControl.childNodes[0];
+    if ('true' !== goog.dom.dataset.get(img, 'ro')) {
+      isDisabled = true;
+    }
+    
     var dialog = MathMLEnhancer.dialog_;
     if (dialog) {
       var textarea = dialog.getElement().childNodes[0];
@@ -115,7 +121,7 @@
         dialog.setButtonConfiguration(sync.api.Dialog.ButtonConfiguration.OK_CANCEL);
       }
     }
-};
+  };
 
   sync.util.loadCSSFile('../plugin-resources/mml-static/mml.css');
 
