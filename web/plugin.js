@@ -106,7 +106,7 @@
    */
   MathMLEnhancer.prototype.disabledStateUpdated = function(isDisabled) {
     var img = this.formControl.childNodes[0];
-    if ('true' !== goog.dom.dataset.get(img, 'ro')) {
+    if ('true' === goog.dom.dataset.get(img, 'ro')) {
       isDisabled = true;
     }
     
