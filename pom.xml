@@ -11,6 +11,12 @@
   <name>Web Author MathML Plugin</name>
   <description>Web Author plugin for rendering and editing MathML equations</description>
 
+  <licenses>
+    <license>
+      <url>http://www.oxygenxml.com/sdk_agreement.html</url>
+    </license>
+  </licenses>
+
   <properties> 
     <sonar.sources>src/main/java,web</sonar.sources>
   </properties>
