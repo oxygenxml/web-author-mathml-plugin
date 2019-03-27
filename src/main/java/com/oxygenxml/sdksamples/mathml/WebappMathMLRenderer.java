@@ -100,7 +100,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
         + "elemId=" + elemId + "&"
         + "docId=" + docId + "\""
         + (readOnly ? " data-ro=\"true\"" : "")
-        + " data-alt=\"" + escapedXML + "\"></img>";
+        + " alt=\"" + escapedXML + "\"></img>";
   }
   
   /**
