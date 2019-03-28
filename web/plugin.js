@@ -40,7 +40,7 @@
     var dialog = this.getDialog();
     
     var mathMlEditor = dialog.getElement().childNodes[0];
-    var alt = this.formControl.childNodes[0].getAttribute("data-alt");
+    var alt = this.formControl.childNodes[0].getAttribute("alt");
     mathMlEditor.value = alt;
     
     dialog.show();
