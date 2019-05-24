@@ -123,8 +123,6 @@
     }
   };
 
-  sync.util.loadCSSFile('../plugin-resources/mml-static/mml.css');
-
   // Register the form-control renderer with the opened editors.
   goog.events.listen(workspace, sync.api.Workspace.EventType.BEFORE_EDITOR_LOADED, function(e) {
     e.editor.registerEnhancer(

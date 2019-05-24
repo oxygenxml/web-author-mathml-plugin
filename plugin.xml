@@ -17,4 +17,5 @@
     <extension type="WebappServlet" class="com.oxygenxml.sdksamples.mathml.MathmlServlet"/>
     <extension type="WebappStaticResourcesFolder" path="web/" href="mml-static"/>
     <extension type="WorkspaceAccess" class="com.oxygenxml.sdksamples.mathml.EditingSessionContextManager"/>
+    <extension type="WebappCSSResource" href="web/mathml.css"/>
 </plugin>
