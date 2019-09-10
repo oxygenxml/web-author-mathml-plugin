@@ -2,13 +2,14 @@ package com.oxygenxml.sdksamples.mathml;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
+import java.util.function.Function;
 
 import javax.swing.text.BadLocationException;
 
 import ro.sync.ecss.extensions.api.AuthorDocumentController;
 import ro.sync.ecss.extensions.api.node.AuthorDocumentFragment;
 import ro.sync.ecss.extensions.api.node.AuthorElement;
-import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
 
 /**
  * Cache of equation descriptors per opened document.
@@ -18,9 +19,9 @@ import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
 public class PerDocumentEquationCache {
 
   /**
-   * The document model.
+   * The document controller.
    */
-  private final AuthorDocumentModel docModel;
+  private final AuthorDocumentController docController;
   
   /**
    * Map from node identifiers to equation XML fragments. 
@@ -32,13 +33,17 @@ public class PerDocumentEquationCache {
    */
   private long lastCompactedCacheSize = 4L;
 
+  Map<AuthorElement, Long> nodeIndexer = new WeakHashMap<>();
+  
+  private long counter = 0;
   /**
    * Constructor.
    */
-  public PerDocumentEquationCache(AuthorDocumentModel docModel) {
-    this.docModel = docModel;
+  public PerDocumentEquationCache(AuthorDocumentController controller) {
+    this.docController = controller;
+    
   }
-
+  
   /**
    * Freezes the XML content that corresponds to the given element.
    * 
@@ -48,12 +53,16 @@ public class PerDocumentEquationCache {
    * @throws BadLocationException
    */
   public synchronized long freezeMathMLfrag(AuthorElement elem) throws BadLocationException {
-    long elemId = docModel.getNodeIndexer().getId(elem);
+    long elemId = nodeIndexer.computeIfAbsent(elem, new Function<AuthorElement, Long>() {
+      @Override
+      public Long apply(AuthorElement t) {
+        return counter++;
+      }
+    });
     
-    AuthorDocumentController documentController = docModel.getAuthorDocumentController();
-    AuthorDocumentFragment mathMlFrag = documentController
+    AuthorDocumentFragment mathMlFrag = docController
         .createDocumentFragment(elem, true);
-    String xml = documentController.serializeFragmentToXML(mathMlFrag);
+    String xml = docController.serializeFragmentToXML(mathMlFrag);
     
     mathMLElements.put(elemId, xml);
     if (mathMLElements.size() > 2 * lastCompactedCacheSize) {
@@ -66,9 +75,9 @@ public class PerDocumentEquationCache {
   /**
    * Compact the cache, removing entries that correspond to stale AuthorElements.
    */
+  @SuppressWarnings("unlikely-arg-type")
   private void compactCache() {
-    mathMLElements.entrySet().removeIf(
-        entry -> docModel.getNodeIndexer().getObjectById(entry.getKey()) == null);
+    mathMLElements.entrySet().removeIf(entry -> !nodeIndexer.containsKey(entry.getKey()));
   }
   
   /**

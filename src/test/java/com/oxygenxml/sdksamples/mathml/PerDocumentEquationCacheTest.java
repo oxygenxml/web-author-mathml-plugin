@@ -37,9 +37,7 @@ public class PerDocumentEquationCacheTest {
     AuthorDocumentController controller = Mockito.mock(AuthorDocumentController.class);
     Mockito.when(documentModel.getAuthorDocumentController()).thenReturn(controller);
     
-    
-    
-    PerDocumentEquationCache cache = new PerDocumentEquationCache(documentModel);
+    PerDocumentEquationCache cache = new PerDocumentEquationCache(documentModel.getAuthorDocumentController());
     
     // Assert that we insert an equation and immediately delete it in 100 different places.
     // The cache should not keep too many entries for equations that are already deleted.
@@ -71,7 +69,7 @@ public class PerDocumentEquationCacheTest {
     AuthorDocumentController controller = Mockito.mock(AuthorDocumentController.class);
     Mockito.when(documentModel.getAuthorDocumentController()).thenReturn(controller);
     
-    PerDocumentEquationCache cache = new PerDocumentEquationCache(documentModel);
+    PerDocumentEquationCache cache = new PerDocumentEquationCache(documentModel.getAuthorDocumentController());
     AuthorElement node1 = Mockito.mock(AuthorElement.class);
     nodes.put(1L, node1);
     Mockito.when(controller.serializeFragmentToXML(Mockito.any())).thenReturn("<math>1</math>");

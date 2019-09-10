@@ -13,8 +13,8 @@ import org.xml.sax.SAXException;
 
 import com.google.common.net.MediaType;
 
+import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.access.EditingSessionContext;
-import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
 import ro.sync.ecss.extensions.api.webapp.plugin.WebappServletPluginExtension;
 
 /**
@@ -39,15 +39,16 @@ public class MathmlServlet extends WebappServletPluginExtension {
 	  String docId = httpRequest.getParameter("docId");
     String elemId = httpRequest.getParameter("elemId");
 	  
-	  AuthorDocumentModel doc = EditingSessionContextManager.getDocument(docId);
-	  if (doc != null) {
-	    EditingSessionContext editingContext = doc.getAuthorAccess().getEditorAccess().getEditingContext();
+	  AuthorAccess authorAccess = EditingSessionContextManager.getDocument(docId);
+	  if (authorAccess != null) {
+	    EditingSessionContext editingContext = authorAccess.getEditorAccess().getEditingContext();
+	    System.out.println("\n doGET CACHE " + (PerDocumentEquationCache) editingContext.getAttribute(EditingSessionContextManager.EQUATION_CACHE) + " \n");
       PerDocumentEquationCache equationCache = (PerDocumentEquationCache) editingContext.getAttribute(EditingSessionContextManager.EQUATION_CACHE);
       
       String xml = equationCache.getXmlFragment(Long.valueOf(elemId));
 	    BufferedImage image;
       try {
-        image = new JEuclidRenderer().convertToImage(doc.getAuthorAccess(), xml);
+        image = new JEuclidRenderer().convertToImage(authorAccess, xml);
       } catch (SAXException e) {
         logger.error("Error parsing MathML content: " + e.getMessage(), e);
         httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error parsing MathML content");

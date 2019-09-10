@@ -37,15 +37,15 @@ public class EditingSessionContextManagerTest {
     EditingSessionContextImpl ctx = new EditingSessionContextImpl();
     Mockito.when(documentModel.getAuthorAccess().getEditorAccess().getEditingContext()).thenReturn(ctx);
     
-    mgr.documentOpened(documentModel);
+    mgr.ensureInitialized(documentModel.getAuthorAccess());
     
     assertNotNull(ctx.docId);
     assertEquals(40, ctx.docId.length());
     documentModel = null;
     System.gc();
     
-    AuthorDocumentModel document = EditingSessionContextManager.getDocument(ctx.docId);
-    assertNull(document);
+    AuthorAccess authorAccess = EditingSessionContextManager.getDocument(ctx.docId);
+    assertNull(authorAccess);
   }
 
   /**

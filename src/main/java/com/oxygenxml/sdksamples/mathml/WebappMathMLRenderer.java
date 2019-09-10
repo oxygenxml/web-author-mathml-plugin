@@ -44,6 +44,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
       throws IOException {
     AuthorElement mathMlElement = context.getElem();
     AuthorAccess authorAccess = context.getAuthorAccess();
+    EditingSessionContextManager.ensureInitialized(authorAccess);
     EditingSessionContext editingContext = authorAccess.getEditorAccess().getEditingContext();
     PerDocumentEquationCache equationCache = 
         (PerDocumentEquationCache) editingContext.getAttribute(EditingSessionContextManager.EQUATION_CACHE);
