@@ -54,7 +54,6 @@ public class EditingSessionContextManager {
       String docId = generateId();
       activeDocsCache.put(docId, authorAccess);
       editingContext.setAttribute(DOCUMENT_MODEL_ID, docId);
-      System.out.println("\n ADD CACHE \n");
       editingContext.setAttribute(EQUATION_CACHE, new PerDocumentEquationCache(authorAccess.getDocumentController()));
     }
   }

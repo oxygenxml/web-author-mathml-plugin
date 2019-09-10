@@ -42,7 +42,6 @@ public class MathmlServlet extends WebappServletPluginExtension {
 	  AuthorAccess authorAccess = EditingSessionContextManager.getDocument(docId);
 	  if (authorAccess != null) {
 	    EditingSessionContext editingContext = authorAccess.getEditorAccess().getEditingContext();
-	    System.out.println("\n doGET CACHE " + (PerDocumentEquationCache) editingContext.getAttribute(EditingSessionContextManager.EQUATION_CACHE) + " \n");
       PerDocumentEquationCache equationCache = (PerDocumentEquationCache) editingContext.getAttribute(EditingSessionContextManager.EQUATION_CACHE);
       
       String xml = equationCache.getXmlFragment(Long.valueOf(elemId));
