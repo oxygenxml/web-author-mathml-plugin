@@ -9,11 +9,6 @@ import com.google.common.cache.CacheBuilder;
 
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.access.EditingSessionContext;
-import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
-import ro.sync.ecss.extensions.api.webapp.access.WebappEditingSessionLifecycleListener;
-import ro.sync.ecss.extensions.api.webapp.access.WebappPluginWorkspace;
-import ro.sync.exml.plugin.workspace.WorkspaceAccessPluginExtension;
-import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
 /**
  * Plugin that adds several editing context attributes.
