@@ -33,11 +33,19 @@ public class PerDocumentEquationCache {
    */
   private long lastCompactedCacheSize = 4L;
 
+  /**
+   * Author elements node indexer.
+   */
   Map<AuthorElement, Long> nodeIndexer = new WeakHashMap<>();
   
+  /**
+   * Counter used to index nodes.
+   */
   private long counter = 0;
   /**
    * Constructor.
+   * 
+   * @param controller the author document controller.
    */
   public PerDocumentEquationCache(AuthorDocumentController controller) {
     this.docController = controller;
@@ -48,6 +56,7 @@ public class PerDocumentEquationCache {
    * Freezes the XML content that corresponds to the given element.
    * 
    * @param elem The author element.
+   * 
    * @return The id of the cache entry.
    * 
    * @throws BadLocationException

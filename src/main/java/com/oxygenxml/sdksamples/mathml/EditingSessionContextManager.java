@@ -41,7 +41,7 @@ public class EditingSessionContextManager {
   /**
    * Sets up the editing context when the document is opened.
    * 
-   * @param documentModel The document model that was opened.
+   * @param authorAccess The author access.
    */
   public static void ensureInitialized(AuthorAccess authorAccess) {
     EditingSessionContext editingContext = authorAccess.getEditorAccess().getEditingContext();
