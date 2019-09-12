@@ -1,9 +1,11 @@
 package com.oxygenxml.sdksamples.mathml;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.swing.text.BadLocationException;
 
@@ -83,9 +85,10 @@ public class PerDocumentEquationCache {
   /**
    * Compact the cache, removing entries that correspond to stale AuthorElements.
    */
-  @SuppressWarnings("unlikely-arg-type")
   private void compactCache() {
-    mathMLElements.entrySet().removeIf(entry -> !nodeIndexer.containsValue(entry.getKey()));
+    HashSet<Long> valuesSet = nodeIndexer.values().stream().collect(Collectors.toCollection(HashSet::new));
+
+    mathMLElements.entrySet().removeIf(entry -> !valuesSet.contains(entry.getKey()));
     
     lastCompactedCacheSize = mathMLElements.size();
   }

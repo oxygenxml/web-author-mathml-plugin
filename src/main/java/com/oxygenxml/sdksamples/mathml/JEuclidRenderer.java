@@ -39,85 +39,85 @@ public class JEuclidRenderer {
    */
   private static final Pattern namedEntityPattern = Pattern.compile("&[^#]");
 
-	/**
-	 * Converts from String to org.w3c.dom.Document.
-	 * 
-	 * @param xml The mathML fragment as String
-	 * @param systemID The system identifier.
-	 * @param docType The document type definition.
-	 * 
-	 * @return The XML Document
-	 * 
-	 * @throws IOException If it fails.
-	 * @throws SAXException If it fails.
-	 */
-	Document loadXMLFromString(String xml, String systemID, AuthorDocumentType docType)
-			throws IOException, SAXException {
-		DOMParser domParser = ParserCreator.createDOMParser();
-		domParser.getXMLParserConfiguration().setFeature("http://apache.org/xml/features/dom/create-entity-ref-nodes", false);
-		
-		if (containsNamedEntities(xml)) {
-		  String docTypeStr;
-		  if (docType != null) {
-		    docTypeStr = docType.serializeDoctype(); 
-		  } else {
-		    docTypeStr = MATH_ML_DOCTYPE;
-		  }
-		  // Add document doctype.
-		  xml = docTypeStr + xml;
-		} else if (!hasNamespacePrefixDeclaration(xml)) {
-		  // detect namespace prefix and declare it.
-		  String prefix = detectNamespacePrefix(xml);
-		  if (prefix != null) {
-		    xml = addMathmlNamespacePrefixMapping(xml, prefix);
-		  }
-		}
-		InputSource inputSource = new InputSource(new StringReader(xml));
-		inputSource.setSystemId(systemID);
-		domParser.parse(inputSource);
-		return domParser.getDocument();
-	}
+  /**
+   * Converts from String to org.w3c.dom.Document.
+   * 
+   * @param xml The mathML fragment as String
+   * @param systemID The system identifier.
+   * @param docType The document type definition.
+   * 
+   * @return The XML Document
+   * 
+   * @throws IOException If it fails.
+   * @throws SAXException If it fails.
+   */
+  Document loadXMLFromString(String xml, String systemID, AuthorDocumentType docType)
+      throws IOException, SAXException {
+    DOMParser domParser = ParserCreator.createDOMParser();
+    domParser.getXMLParserConfiguration().setFeature("http://apache.org/xml/features/dom/create-entity-ref-nodes", false);
+    
+    if (containsNamedEntities(xml)) {
+      String docTypeStr;
+      if (docType != null) {
+        docTypeStr = docType.serializeDoctype(); 
+      } else {
+        docTypeStr = MATH_ML_DOCTYPE;
+      }
+      // Add document doctype.
+      xml = docTypeStr + xml;
+    } else if (!hasNamespacePrefixDeclaration(xml)) {
+      // detect namespace prefix and declare it.
+      String prefix = detectNamespacePrefix(xml);
+      if (prefix != null) {
+        xml = addMathmlNamespacePrefixMapping(xml, prefix);
+      }
+    }
+    InputSource inputSource = new InputSource(new StringReader(xml));
+    inputSource.setSystemId(systemID);
+    domParser.parse(inputSource);
+    return domParser.getDocument();
+  }
 
-	/**
-	 * Adds the MathML namespace prefix mapping with the given prefix.
-	 * @param xml The XML.
-	 * @param prefix The prefix.
-	 * @return The XML with prefix mapping.
-	 */
+  /**
+   * Adds the MathML namespace prefix mapping with the given prefix.
+   * @param xml The XML.
+   * @param prefix The prefix.
+   * @return The XML with prefix mapping.
+   */
   String addMathmlNamespacePrefixMapping(String xml, String prefix) {
     return xml.replaceFirst("<" + prefix + ":math(/|\\s|>)", 
         "<" + prefix + ":math " + "xmlns:" + prefix + "=\"http://www.w3.org/1998/Math/MathML\"$1");
   }
-	
-	/**
-	 * Returns true if the xml content may contain named entities.
-	 * @param xml The xml content.
-	 * @return <code>true</code> if the xml may contain named entities.
-	 */
-	boolean containsNamedEntities(String xml) {
-	  Matcher matcher = namedEntityPattern.matcher(xml);
-	  return matcher.find();
-	}
-	
-	/**
-	 * @param xml The xml content.
-	 * @return <code>true</code> if the content has a namespace prefix declaration.
-	 */
-	boolean hasNamespacePrefixDeclaration(String xml) {
-	  return xml.contains("http://www.w3.org/1998/Math/MathML");
-	}
+  
+  /**
+   * Returns true if the xml content may contain named entities.
+   * @param xml The xml content.
+   * @return <code>true</code> if the xml may contain named entities.
+   */
+  boolean containsNamedEntities(String xml) {
+    Matcher matcher = namedEntityPattern.matcher(xml);
+    return matcher.find();
+  }
+  
+  /**
+   * @param xml The xml content.
+   * @return <code>true</code> if the content has a namespace prefix declaration.
+   */
+  boolean hasNamespacePrefixDeclaration(String xml) {
+    return xml.contains("http://www.w3.org/1998/Math/MathML");
+  }
 
-	/**
-	 * @param xml The xml content.
-	 * @return The prefix for the MathML namespace or null if there is no prefix used.
-	 */
-	String detectNamespacePrefix(String xml) {
-	  Matcher matcher = prefixPattern.matcher(xml);
-	  if (matcher.find()) {
-	    return matcher.group(1);
-	  }
-	  return null;
-	}
+  /**
+   * @param xml The xml content.
+   * @return The prefix for the MathML namespace or null if there is no prefix used.
+   */
+  String detectNamespacePrefix(String xml) {
+    Matcher matcher = prefixPattern.matcher(xml);
+    if (matcher.find()) {
+      return matcher.group(1);
+    }
+    return null;
+  }
 
   /**
    * Converts an mathML fragment to image.

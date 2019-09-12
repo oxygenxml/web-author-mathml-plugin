@@ -35,17 +35,17 @@ public class MathmlServlet extends WebappServletPluginExtension {
    */
   @Override
   public void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws ServletException, IOException {
-	  // The params used to retrieve the image
-	  String docId = httpRequest.getParameter("docId");
+    // The params used to retrieve the image
+    String docId = httpRequest.getParameter("docId");
     String elemId = httpRequest.getParameter("elemId");
-	  
-	  AuthorAccess authorAccess = EditingSessionContextManager.getDocument(docId);
-	  if (authorAccess != null) {
-	    EditingSessionContext editingContext = authorAccess.getEditorAccess().getEditingContext();
+    
+    AuthorAccess authorAccess = EditingSessionContextManager.getDocument(docId);
+    if (authorAccess != null) {
+      EditingSessionContext editingContext = authorAccess.getEditorAccess().getEditingContext();
       PerDocumentEquationCache equationCache = (PerDocumentEquationCache) editingContext.getAttribute(EditingSessionContextManager.EQUATION_CACHE);
       
       String xml = equationCache.getXmlFragment(Long.valueOf(elemId));
-	    BufferedImage image;
+      BufferedImage image;
       try {
         image = new JEuclidRenderer().convertToImage(authorAccess, xml);
       } catch (SAXException e) {
@@ -53,14 +53,14 @@ public class MathmlServlet extends WebappServletPluginExtension {
         httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error parsing MathML content");
         return;
       }
-	  
-	    // mime type, cache, image content
-	    httpResponse.setHeader("Content-Type", MediaType.PNG.toString());
-	    httpResponse.setHeader("Cache-Control", "max-age=31536000");
+    
+      // mime type, cache, image content
+      httpResponse.setHeader("Content-Type", MediaType.PNG.toString());
+      httpResponse.setHeader("Cache-Control", "max-age=31536000");
       ImageIO.write(image, "png", httpResponse.getOutputStream());
-	  } else {
-	    httpResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "MathML PNG file was not found.");
-	  }
+    } else {
+      httpResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "MathML PNG file was not found.");
+    }
   }
       
   /**

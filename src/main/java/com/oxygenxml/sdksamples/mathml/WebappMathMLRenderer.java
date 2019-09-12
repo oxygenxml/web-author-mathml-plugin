@@ -37,7 +37,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
    *          The output stream.
    * 
    * @throws IOException
-   *           If the form control could not be redered.
+   *           If the form control could not be rendered.
    */
   @Override
   public void renderControl(AuthorInplaceContext context, Writer out)
@@ -48,7 +48,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
     EditingSessionContext editingContext = authorAccess.getEditorAccess().getEditingContext();
     PerDocumentEquationCache equationCache = 
         (PerDocumentEquationCache) editingContext.getAttribute(EditingSessionContextManager.EQUATION_CACHE);
-    String docId = (String) editingContext.getAttribute(EditingSessionContextManager.DOCUMENT_MODEL_ID);
+    String docId = (String) editingContext.getAttribute(EditingSessionContextManager.AUTHOR_ACCESS_ID);
 
     try {
       long elemId = equationCache.freezeMathMLfrag(mathMlElement);
