@@ -67,7 +67,6 @@ public class PerDocumentEquationCache {
     mathMLElements.put(elemId, xml);
     if (mathMLElements.size() > 2 * lastCompactedCacheSize) {
       compactCache();
-      lastCompactedCacheSize = mathMLElements.size();
     }
     return elemId;
   }
@@ -77,7 +76,9 @@ public class PerDocumentEquationCache {
    */
   @SuppressWarnings("unlikely-arg-type")
   private void compactCache() {
-    mathMLElements.entrySet().removeIf(entry -> !nodeIndexer.containsKey(entry.getKey()));
+    mathMLElements.entrySet().removeIf(entry -> !nodeIndexer.containsValue(entry.getKey()));
+    
+    lastCompactedCacheSize = mathMLElements.size();
   }
   
   /**
