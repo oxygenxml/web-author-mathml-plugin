@@ -75,6 +75,10 @@ public class PerDocumentEquationCacheTest {
       assertEquals(eq, cache.getXmlFragment(id));
       
       System.gc();
+      System.runFinalization();
+      System.gc();
+      System.runFinalization();
+
       assertTrue(cache.getSize() <= 8);
     }
   }
