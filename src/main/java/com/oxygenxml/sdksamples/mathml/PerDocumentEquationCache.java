@@ -85,7 +85,7 @@ public class PerDocumentEquationCache {
    * Compact the cache, removing entries that correspond to stale AuthorElements.
    */
   private void compactCache() {
-    HashSet<Long> valuesSet = new HashSet<>(nodeIndexer.values());;
+    HashSet<Long> valuesSet = new HashSet<>(nodeIndexer.values());
 
     mathMLElements.entrySet().removeIf(entry -> !valuesSet.contains(entry.getKey()));
     
