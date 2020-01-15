@@ -3,11 +3,11 @@
    * Enhancer for mathml form control.
    *
    * @param {HTMLElement} element The element to enhance.
-   * @param editor is the editor.
+   * @param editingSupport The editingSupport.
    * @constructor
    */
-  MathMLEnhancer = function(element, editor) {
-    sync.formctrls.Enhancer.call(this, element, editor);
+  var MathMLEnhancer = function(element, editingSupport) {
+    sync.formctrls.Enhancer.call(this, element, editingSupport);
   };
   goog.inherits(MathMLEnhancer, sync.formctrls.Enhancer);
 
@@ -61,7 +61,7 @@
       var xmlNode = this.getParentNode();
       var sel = sync.api.Selection.createEmptySelectionInNode(xmlNode, 'before');
       
-      var actionsManager = this.editor.getActionsManager();
+      var actionsManager = this.editingSupport.getActionsManager();
       actionsManager.invokeOperation('ro.sync.ecss.extensions.commons.operations.InsertOrReplaceFragmentOperation', {
         fragment: mathMlEditor.value,
         insertLocation: "(./ancestor-or-self::*[namespace-uri()='http://www.w3.org/1998/Math/MathML' and local-name() = 'math'])[1]",
