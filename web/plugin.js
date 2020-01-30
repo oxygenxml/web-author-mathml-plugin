@@ -50,13 +50,13 @@
   /**
    * Commits the fragment edited by the user.
    * 
-   * @param mathMlEditor The textarea used to edit the MathML fragment.
-   * @param alt The original MathML fragment as a string. 
-   * @param key The result of the user action - 'ok' or 'cancel'.
+   * @param {object} mathMlEditor The textarea used to edit the MathML fragment.
+   * @param {string} alt The original MathML fragment as a string.
+   * @param {string} key The result of the user action - 'ok' or 'cancel'.
    */
   MathMLEnhancer.prototype.commitFragment = function(mathMlEditor, alt, key) {
     // If Ok button is pressed and the content of the text area has been changed.
-    if (key == 'ok' && mathMlEditor.value != alt) {
+    if (key === 'ok' && mathMlEditor.value != alt) {
       // invoke replace operation
       var xmlNode = this.getParentNode();
       var sel = sync.api.Selection.createEmptySelectionInNode(xmlNode, 'before');
@@ -88,8 +88,11 @@
   MathMLEnhancer.prototype.getDialog = function() {
     if (!MathMLEnhancer.dialog_) {
       var dialog = workspace.createDialog();
-      dialog.getElement().innerHTML =
-        '<textarea class="mml-edit-area" spellcheck="false"></textarea>';
+      var dialogElement = dialog.getElement();
+      goog.dom.removeChildren(dialogElement);
+      var textarea = goog.dom.createDom('textarea', 'mml-edit-area');
+      textarea.setAttribute('spellcheck', 'false');
+      goog.dom.append(dialogElement, textarea);
       dialog.setTitle(tr(msgs.MATHML_EDITOR_));
       dialog.setResizable(true);
       dialog.setPreferredSize(500, 500);
