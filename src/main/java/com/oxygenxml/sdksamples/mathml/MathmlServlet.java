@@ -8,7 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import com.google.common.net.MediaType;
@@ -24,8 +25,7 @@ public class MathmlServlet extends WebappServletPluginExtension {
   /**
    * Logger
    */
-  private static Logger logger = Logger
-      .getLogger(MathmlServlet.class.getName());
+  private static Logger logger = LogManager.getLogger(MathmlServlet.class.getName());
   
   /**
    * Returns the PNG image that corresponds to the mathml equation.

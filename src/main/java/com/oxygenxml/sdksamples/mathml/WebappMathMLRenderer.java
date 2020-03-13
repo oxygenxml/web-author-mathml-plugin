@@ -6,7 +6,8 @@ import java.io.StringReader;
 import java.io.Writer;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.access.EditingSessionContext;
@@ -25,8 +26,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
   /**
    * Logger
    */
-  private static final Logger logger = Logger
-      .getLogger(WebappMathMLRenderer.class.getName());
+  private static final Logger logger = LogManager.getLogger(WebappMathMLRenderer.class.getName());
 
   /**
    * Render control.
