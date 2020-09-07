@@ -604,5 +604,10 @@ public class PerDocumentEquationCacheTest {
 
     }
 
+    @Override
+    public AuthorDocumentFragment createDocumentFragment(int arg0, int arg1, boolean arg2) throws BadLocationException {
+      return null;
+    }
+
   }
 }
