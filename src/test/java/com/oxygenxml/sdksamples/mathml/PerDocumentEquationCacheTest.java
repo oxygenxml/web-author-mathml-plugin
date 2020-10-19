@@ -609,5 +609,10 @@ public class PerDocumentEquationCacheTest {
       return null;
     }
 
+    @Override
+    public SchemaAwareHandlerResult insertXMLFragmentSchemaAware(String xmlFragment, String xpathLocation,
+        String relativePosition, boolean insertEvenIfInvalid) throws AuthorOperationException {
+      return null;
+    }
   }
 }
