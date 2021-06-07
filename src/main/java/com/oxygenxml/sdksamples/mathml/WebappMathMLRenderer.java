@@ -54,7 +54,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
       long elemId = equationCache.freezeMathMLfrag(mathMlElement);
       String xml = equationCache.getXmlFragment(elemId);
       
-      String xmlHash = DigestUtils.shaHex(xml);
+      String xmlHash = DigestUtils.sha256Hex(xml);
       
       String systemID = authorAccess.getDocumentController().getAuthorDocumentNode().getSystemID();
       String xmlPPed = this.formatAndIndentXmlFragment(xml, systemID);
