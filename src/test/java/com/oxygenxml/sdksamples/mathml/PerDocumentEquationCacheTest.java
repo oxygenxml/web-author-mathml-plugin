@@ -21,6 +21,7 @@ import ro.sync.ecss.extensions.api.AuthorDocumentType;
 import ro.sync.ecss.extensions.api.AuthorListener;
 import ro.sync.ecss.extensions.api.AuthorOperationException;
 import ro.sync.ecss.extensions.api.AuthorSchemaManager;
+import ro.sync.ecss.extensions.api.AuthorXPathExpressionBuilder;
 import ro.sync.ecss.extensions.api.SelectionInterpretationMode;
 import ro.sync.ecss.extensions.api.UniqueAttributesProcessor;
 import ro.sync.ecss.extensions.api.XPathVersion;
@@ -612,6 +613,11 @@ public class PerDocumentEquationCacheTest {
     @Override
     public SchemaAwareHandlerResult insertXMLFragmentSchemaAware(String xmlFragment, String xpathLocation,
         String relativePosition, boolean insertEvenIfInvalid) throws AuthorOperationException {
+      return null;
+    }
+
+    @Override
+    public AuthorXPathExpressionBuilder getXPathExpressionBuilder(int arg0) throws BadLocationException {
       return null;
     }
   }
