@@ -7,7 +7,7 @@
     name="MathML"
     description="Provides support for embedded MathML equations (where allowed by the document schema)."
     version="${project.nosnapshot.version}"
-    vendor="Syncro Soft SRL"
+    vendor="Syncro Soft"
     class="com.oxygenxml.sdksamples.mathml.MathMLPlugin">
     <runtime>
       <librariesFolder name="lib"/>
