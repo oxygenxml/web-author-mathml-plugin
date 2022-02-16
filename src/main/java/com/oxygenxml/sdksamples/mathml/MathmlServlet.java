@@ -8,12 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import com.google.common.net.MediaType;
 
+import lombok.extern.slf4j.Slf4j;
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.access.EditingSessionContext;
 import ro.sync.ecss.extensions.api.webapp.plugin.WebappServletPluginExtension;
@@ -21,11 +20,8 @@ import ro.sync.ecss.extensions.api.webapp.plugin.WebappServletPluginExtension;
 /**
  * MathML SERVLET used to retrieve the PNG image, after conversion.
  */
+@Slf4j
 public class MathmlServlet extends WebappServletPluginExtension {
-  /**
-   * Logger
-   */
-  private static Logger logger = LogManager.getLogger(MathmlServlet.class.getName());
   
   /**
    * Returns the PNG image that corresponds to the mathml equation.
@@ -49,7 +45,7 @@ public class MathmlServlet extends WebappServletPluginExtension {
       try {
         image = new JEuclidRenderer().convertToImage(authorAccess, xml);
       } catch (SAXException e) {
-        logger.error("Error parsing MathML content: " + e.getMessage(), e);
+        log.error("Error parsing MathML content: " + e.getMessage(), e);
         httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error parsing MathML content");
         return;
       }

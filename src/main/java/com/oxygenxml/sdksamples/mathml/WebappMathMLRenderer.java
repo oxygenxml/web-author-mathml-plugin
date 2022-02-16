@@ -6,9 +6,8 @@ import java.io.StringReader;
 import java.io.Writer;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import lombok.extern.slf4j.Slf4j;
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.access.EditingSessionContext;
 import ro.sync.ecss.extensions.api.editor.AuthorInplaceContext;
@@ -22,12 +21,9 @@ import ro.sync.exml.workspace.api.util.PrettyPrintException;
  *
  * @author costi_dumitrescu
  */
+@Slf4j
 public class WebappMathMLRenderer extends WebappFormControlRenderer {
-  /**
-   * Logger
-   */
-  private static final Logger logger = LogManager.getLogger(WebappMathMLRenderer.class.getName());
-
+  
   /**
    * Render control.
    * 
@@ -69,7 +65,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
       
       out.append(generateImgHtml(image, docId, elemId, xmlHash, escapedXML, context.isReadOnlyContext()));
     } catch (Exception e) {
-      logger.error(e, e);
+      log.error(e.getMessage(), e);
       out.append("<span style=\"color: red\">Error rendering MathML</span>");
     }
   }
@@ -120,9 +116,7 @@ public class WebappMathMLRenderer extends WebappFormControlRenderer {
         formattedContent = PluginWorkspaceProvider.getPluginWorkspace().getXMLUtilAccess()
             .prettyPrint(new StringReader(xmlContent), systemID);
       } catch (PrettyPrintException e1) {
-        if(logger.isDebugEnabled()){
-         logger.debug("Content not in XML format");
-        }
+         log.debug("Content not in XML format");
       }
     }
     
