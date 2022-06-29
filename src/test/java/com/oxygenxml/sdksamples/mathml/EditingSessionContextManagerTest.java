@@ -439,6 +439,12 @@ public class EditingSessionContextManagerTest {
     public int getCaretOffsetByAnchor(String anchor) {
       return 0;
     }
+
+    @Override
+    public String getTextFromClipboard() {
+      // TODO Auto-generated method stub
+      return null;
+    }
     
   }
 
