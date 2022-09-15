@@ -620,5 +620,10 @@ public class PerDocumentEquationCacheTest {
     public AuthorXPathExpressionBuilder getXPathExpressionBuilder(int arg0) throws BadLocationException {
       return null;
     }
+
+    @Override
+    public CharSequence getContentCharSequence() {
+      return null;
+    }
   }
 }
