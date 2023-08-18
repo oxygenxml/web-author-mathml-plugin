@@ -4,9 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.xml.sax.SAXException;
 
@@ -15,13 +12,16 @@ import com.google.common.net.MediaType;
 import lombok.extern.slf4j.Slf4j;
 import ro.sync.ecss.extensions.api.AuthorAccess;
 import ro.sync.ecss.extensions.api.access.EditingSessionContext;
-import ro.sync.ecss.extensions.api.webapp.plugin.WebappServletPluginExtension;
+import ro.sync.ecss.extensions.api.webapp.plugin.ServletPluginExtension;
+import ro.sync.ecss.extensions.api.webapp.plugin.servlet.ServletException;
+import ro.sync.ecss.extensions.api.webapp.plugin.servlet.http.HttpServletRequest;
+import ro.sync.ecss.extensions.api.webapp.plugin.servlet.http.HttpServletResponse;
 
 /**
  * MathML SERVLET used to retrieve the PNG image, after conversion.
  */
 @Slf4j
-public class MathmlServlet extends WebappServletPluginExtension {
+public class MathmlServlet extends ServletPluginExtension {
   
   /**
    * Returns the PNG image that corresponds to the mathml equation.
