@@ -46,6 +46,7 @@ public class MathmlServlet extends ServletPluginExtension {
         image = new JEuclidRenderer().convertToImage(authorAccess, xml);
       } catch (SAXException e) {
         log.error("Error parsing MathML content: " + e.getMessage(), e);
+        httpResponse.setHeader("Content-Type", MediaType.PLAIN_TEXT_UTF_8.toString());
         httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error parsing MathML content");
         return;
       }
