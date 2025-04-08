@@ -34,6 +34,13 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>ro.sync.compliance</groupId>
+        <artifactId>compliance-mvn-dependency-check-to-sbom</artifactId>
+        <configuration>
+          <tags>jira-wa</tags>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
           <execution>
